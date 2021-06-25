@@ -1,0 +1,15 @@
+#include "Assets/Materials/Shaders/Specluar.hlsl"
+#include "Assets/Materials/Shaders/SDFFunctions.hlsl"
+
+void WaterShading_float(float3 normal, float3 reflectionColor, float3 waterColor, float3 viewDir, float reflectivity, out float3 newColor){
+    float3 lightDir;
+    float3 lightColor;
+    GetSceneMainlight(lightDir, lightColor);
+
+    float s = specular(lightDir, normal, viewDir, 50, 2, float3(1,20,1));
+    float highLights = specular(lightDir, normal, viewDir, 100, 2, float3(1,1,1));
+    highLights = smoothstep(1,1.2, highLights);
+
+    float nDotL = saturate(dot(normal * 2, lightDir));
+    newColor = highLights;//reflectivity * reflectionColor + ((1 - reflectivity) * nDotL * waterColor * 0 + s * 0.1) * lightColor + highLights  * lightColor;
+}

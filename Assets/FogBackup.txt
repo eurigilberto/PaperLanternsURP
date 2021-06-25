@@ -1,0 +1,4 @@
+Fog Start 10
+Fog Interp Distance 100
+#010205
+Fog exp multiplier 3.5
